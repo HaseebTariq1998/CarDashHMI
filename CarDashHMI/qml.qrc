@@ -6,5 +6,6 @@
         <file>Assets/Images/Gauge.png</file>
         <file>Assets/Images/needle.png</file>
         <file>Assets/Fonts/Unitext Regular.ttf</file>
+        <file>JavascriptScripts/AdaptiveLayoutManager.js</file>
     </qresource>
 </RCC>

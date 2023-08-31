@@ -1,8 +1,11 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
+import QtQml 2.3
 
 import "qrc:/CustomComponents"
+
+import "qrc:/JavascriptScripts/AdaptiveLayoutManager.js" as Responsive
 
 ApplicationWindow {
     id: mainWindow
@@ -11,9 +14,22 @@ ApplicationWindow {
     height: 487
     visible: true
     title: qsTr("CarDashHMI")
+    property var adaptive: new Responsive.AdaptiveLayoutManager(1219,487, mainWindow.width,mainWindow.height)
+
+    onWidthChanged: {
+        if(adaptive)
+        adaptive.updateWindowWidth(mainWindow.width)
+    }
+
+    onHeightChanged: {
+        if(adaptive)
+        adaptive.updateWindowHeight(mainWindow.height)
+    }
 
     background: Image {
         id: background
+        width: adaptive.width(1219)
+        height: adaptive.height(487)
         source: "qrc:/Assets/Images/Background.png"
     }
 
@@ -24,11 +40,11 @@ ApplicationWindow {
 
     Gauge{
 
-        value: 4
+        value: 6
         anchors{
             verticalCenter: parent.verticalCenter
             left: parent.left
-            leftMargin: 59
+            leftMargin: adaptive.width(59)
         }
 
 
@@ -36,14 +52,12 @@ ApplicationWindow {
 
     Gauge{
 
-        x: 767
-        y: 50
-        value: 150
+        x: adaptive.width(767)
+        y: adaptive.height(50)
+        value: 200
         maxValue: 280
 
 
     }
-
-
 
 }
