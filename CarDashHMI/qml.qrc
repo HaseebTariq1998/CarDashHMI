@@ -7,5 +7,10 @@
         <file>Assets/Images/needle.png</file>
         <file>Assets/Fonts/Unitext Regular.ttf</file>
         <file>JavascriptScripts/AdaptiveLayoutManager.js</file>
+        <file>CustomComponents/BarIndicator.qml</file>
+        <file>Assets/Images/BarIndicator/barIndicatorFour.png</file>
+        <file>Assets/Images/BarIndicator/barIndicatorOne.png</file>
+        <file>Assets/Images/BarIndicator/barIndicatorThree.png</file>
+        <file>Assets/Images/BarIndicator/barIndicatorTwo.png</file>
     </qresource>
 </RCC>

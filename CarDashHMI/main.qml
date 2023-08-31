@@ -58,12 +58,41 @@ ApplicationWindow {
         running: true
     }
 
+    NumberAnimation{
+        duration: 5000
+        properties: "value"
+        from: 100
+        to: 0
+        target: fuelBar
+        running: true
+    }
+
     Gauge{
         x: adaptive.width(767)
         y: adaptive.height(50)
         gaugeValueUnitText.text: "km/h"
         value: 200
         maxValue: 280
+    }
+
+    BarIndicator{
+        id: fuelBar
+        value: 50
+        maxValue: 100
+
+        x: adaptive.width(28)
+        y: adaptive.height(289)
+    }
+
+    BarIndicator{
+        id: temperatureBar
+
+        x: adaptive.width(mainWindow.width - 27)
+        y: adaptive.height(289)
+
+        transform: [
+            Scale{ xScale: -1}
+        ]
     }
 
 }
