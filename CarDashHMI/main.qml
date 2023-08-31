@@ -39,25 +39,31 @@ ApplicationWindow {
        }
 
     Gauge{
+        id: rpm
 
-        value: 6
+        value: 5
         anchors{
             verticalCenter: parent.verticalCenter
             left: parent.left
             leftMargin: adaptive.width(59)
         }
+    }
 
-
+    NumberAnimation{
+        duration: 5000
+        properties: "value"
+        from: 0
+        to: 8
+        target: rpm
+        running: true
     }
 
     Gauge{
-
         x: adaptive.width(767)
         y: adaptive.height(50)
+        gaugeValueUnitText.text: "km/h"
         value: 200
         maxValue: 280
-
-
     }
 
 }
