@@ -42,6 +42,7 @@ ApplicationWindow {
         id: rpm
 
         value: 5
+        z: 2
         anchors{
             verticalCenter: parent.verticalCenter
             left: parent.left
@@ -56,6 +57,7 @@ ApplicationWindow {
         to: 8
         target: rpm
         running: true
+        loops: Animation.Infinite
     }
 
     NumberAnimation{
@@ -70,6 +72,7 @@ ApplicationWindow {
     Gauge{
         x: adaptive.width(767)
         y: adaptive.height(50)
+        z: 2
         gaugeValueUnitText.text: "km/h"
         value: 200
         maxValue: 280
@@ -93,6 +96,9 @@ ApplicationWindow {
         transform: [
             Scale{ xScale: -1}
         ]
+    }
+
+    MenuSection{
     }
 
 }
