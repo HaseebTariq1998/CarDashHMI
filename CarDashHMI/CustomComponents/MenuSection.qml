@@ -8,39 +8,61 @@ Rectangle{
     anchors.centerIn: parent
     width:  adaptive.width(500)
     height: adaptive.height(300)
-    color: "red"
+    color: "black"
     visible: true
+    clip: true
 
     StackView{
         id: mainApplicationStackView
         anchors.fill: parent
 
-    }
-
-    RadialGradient {
-        anchors.fill: parent
-        gradient: Gradient {
-            GradientStop {
-                position: 0.0
-                color: "#00000000"
+        pushEnter: Transition {
+            NumberAnimation {
+                properties: "x"
+                from: mainApplicationStackView.width
+                to: 0
+                duration: 1000 // Milliseconds for push animation
+                easing.type: Easing.InOutQuad
             }
-            GradientStop {
-                position:0.52
-                color: "#FF000000"
+        }
+
+
+
+        pushExit: Transition {
+            NumberAnimation {
+                properties: "x"
+                from: 0
+                to: -mainApplicationStackView.width
+                duration: 1000 // Milliseconds for push animation
+                easing.type: Easing.InOutQuad
             }
         }
 
     }
+
 
     PageMap{
         id: pageMap
         visible: false
     }
 
-    Component.onCompleted: {
-        mainApplicationStackView.push(pageMap)
-
+    PageMedia{
+        id: pageMedia
+        visible: false
     }
 
+    Timer{
+        id: pageShifTimer
+        interval: 3000
+        onTriggered: {
+            mainApplicationStackView.push(pageMap)
+            pageMap.startAnimation()
+        }
+    }
 
+    Component.onCompleted: {
+        mainApplicationStackView.push(pageMedia)
+        pageShifTimer.running = true
+
+    }
 }

@@ -6,13 +6,34 @@ import QtGraphicalEffects 1.0
 import QtPositioning 5.6
 import QtQuick.Controls.Styles 1.4
 
-Item {
+Page {
     width:  adaptive.width(500)
     height: adaptive.height(300)
+//    color: "transparent"
 
     property var currentLoc: QtPositioning.coordinate(33.556269, 73.166039) //QtPositioning.coordinate(-27.573383, 153.091167)
     property bool isRoutingStart: false
 
+
+    function startAnimation (){
+        geoModel.update()
+    }
+
+    RadialGradient {
+        z: 100000000
+          anchors.fill: parent
+          gradient: Gradient {
+              GradientStop {
+                position: 0.0
+                color: "#00000000"
+              }
+              GradientStop {
+                position: 0.52
+                color: "black"
+              }
+            }
+
+      }
 
     // Main map
     Map {
@@ -156,7 +177,7 @@ Item {
         Timer{
             id: animationTimer
 
-            interval: 2000
+            interval: 3000
             onTriggered: {
                 startMarker.visible = false
                 currentLocationMarker.visible = true
@@ -251,7 +272,7 @@ Item {
     }
 
     Component.onCompleted: {
-        geoModel.update()
+
 
     }
 }

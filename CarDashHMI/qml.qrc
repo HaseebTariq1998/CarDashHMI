@@ -16,5 +16,8 @@
         <file>CustomComponents/Pages/PageMap.qml</file>
         <file>Assets/Images/Map/CarMarker.png</file>
         <file>Assets/Images/Map/LocationMarker.png</file>
+        <file>CustomComponents/Pages/PageMedia.qml</file>
+        <file>Assets/Images/Media/AlbumArt.png</file>
+        <file>Assets/Images/Media/MusicIcon.png</file>
     </qresource>
 </RCC>
