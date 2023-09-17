@@ -19,5 +19,6 @@
         <file>CustomComponents/Pages/PageMedia.qml</file>
         <file>Assets/Images/Media/AlbumArt.png</file>
         <file>Assets/Images/Media/MusicIcon.png</file>
+        <file>CustomComponents/ToolBar.qml</file>
     </qresource>
 </RCC>

@@ -13,7 +13,7 @@ Item {
       function getState() {
           var percent = (value / maxValue) * 100
 
-          if (percent >= 100) return "fourBar"
+          if (percent >= 90) return "fourBar"
           else if (percent >= 75) return "threeBar"
           else if (percent >= 50) return "twoBar"
           else if (percent >= 25) return "oneBar"

@@ -1,5 +1,9 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QScopedPointer>
+#include "weather.h"
+#include <QDebug>
+#include <QQmlContext>
 
 
 int main(int argc, char *argv[])
@@ -18,6 +22,14 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
+
+    QScopedPointer<Weather> weather(new Weather);
+
+    engine.rootContext()->setContextProperty("weather",weather.get());
+
+
+
+
 
     return app.exec();
 }

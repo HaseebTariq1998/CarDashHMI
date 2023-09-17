@@ -11,7 +11,7 @@ Page {
     height: adaptive.height(300)
 //    color: "transparent"
 
-    property var currentLoc: QtPositioning.coordinate(33.556269, 73.166039) //QtPositioning.coordinate(-27.573383, 153.091167)
+    property var currentLoc: QtPositioning.coordinate(48.150492, 11.537279)   //QtPositioning.coordinate(-27.573383, 153.091167)
     property bool isRoutingStart: false
 
 
@@ -41,8 +41,9 @@ Page {
 
         anchors.fill: parent
         copyrightsVisible: false
-        center: QtPositioning.coordinate(33.640479,73.105102)
-        zoomLevel: 10
+        center: QtPositioning.coordinate(48.1546944, 11.5373611)
+        zoomLevel: 13.3
+        bearing: -80
 
         plugin: Plugin {
             name: "mapboxgl"
@@ -71,7 +72,7 @@ Page {
         // Current location marker
         MapQuickItem{
             id: currentLocationMarker
-            coordinate: QtPositioning.coordinate(33.556269, 73.166039)
+            coordinate: QtPositioning.coordinate(48.150492, 11.537279)
             visible: false
             z:1000
 
@@ -94,7 +95,7 @@ Page {
                     height: adaptive.height(100) *  (map.zoomLevel / 17)
                     source: "qrc:/Assets/Images/Map/CarMarker.png"
                     anchors.centerIn: parent
-                    anchors.horizontalCenterOffset: 3
+//                    anchors.horizontalCenterOffset: 3
                 }
             }
 
@@ -165,7 +166,10 @@ Page {
 
 
             onRoutesChanged: {
-                destinationMarker.coordinate = geoModel.get(0).coordinate
+
+                map.center = routeModel.get(0).path[ (routeModel.get(0).path.length/2).toFixed(0) ]
+                console.log(map.center)
+                destinationMarker.coordinate = routeModel.get(0).path[ routeModel.get(0).path.length -1 ]
                 startMarker.coordinate = currentLoc
                 destinationMarker.visible = true
                 startMarker.visible = true
@@ -183,8 +187,9 @@ Page {
                 currentLocationMarker.visible = true
                 isRoutingStart = true
                 simulateDrive.path = routeModel.get(0).path
-                simulateDrive.running = true
+
                 routeStartAnimation.running = true
+                simulateDrive.running = true
             }
         }
 
@@ -198,8 +203,14 @@ Page {
             interval: 1000
             repeat: true
             onTriggered: {
+                if(path.length > index)
+                {
                 currentLocationMarker.coordinate = path[index]
                 index++
+                }
+                else{
+                    simulateDrive.stop()
+                }
 
             }
         }
@@ -216,7 +227,7 @@ Page {
                     value: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
                 }
             }
-            query: "Blue area islamabad"
+            query: "MEININGER Hotel München Olympiapark, Landshuter Allee 174, 80637 München, Germany"
 
             onLocationsChanged: {
                 if(count)
@@ -248,7 +259,7 @@ Page {
             duration: 6000
             properties: "zoomLevel"
             from: map.zoomLevel
-            to: 15
+            to: 18
         }
 
         NumberAnimation{
@@ -257,18 +268,21 @@ Page {
             target: map
             duration: 1000
             properties: "tilt"
-            from: map.zoomLevel
-            to: map.maximumTilt * 0.9
+            from: 0
+            to: map.maximumTilt
         }
 
         NumberAnimation{
             id: rotationAnimation
 
             target: map
-            duration: 8000
+            duration: 5000
             properties: "bearing"
-            to: -30
+            from: -80
+            to: 0
         }
+
+
     }
 
     Component.onCompleted: {

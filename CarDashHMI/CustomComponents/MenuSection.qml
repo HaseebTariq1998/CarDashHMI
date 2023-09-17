@@ -53,7 +53,7 @@ Rectangle{
 
     Timer{
         id: pageShifTimer
-        interval: 3000
+        interval: 5000
         onTriggered: {
             mainApplicationStackView.push(pageMap)
             pageMap.startAnimation()

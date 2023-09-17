@@ -11,8 +11,9 @@ Item{
     property double maxValue: 8
     property alias glowColor: gaugeGlow.color
     property alias backgroundAsset: gaugeAsset.source
-    property alias gaugeValueText: valueTitle
+    property alias gaugeValueText: valueTitle.text
     property alias gaugeValueUnitText: valueUnit
+    property alias gaugeShadow: gaugeGlow
 
 
     width: adaptive.width(391)
@@ -25,12 +26,13 @@ Item{
 
         anchors.fill: mainGauge
         horizontalOffset: 3
-        verticalOffset: 3
+//        verticalOffset: 3
         radius: 5
+        spread: 0.1
         samples: 17
         color: "black"
         source: mainGauge
-        opacity: 0.3
+        opacity: 0.35
     }
 
     // Gauge digits markings
