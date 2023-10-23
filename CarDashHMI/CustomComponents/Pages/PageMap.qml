@@ -1,3 +1,23 @@
+// ******************************************
+// ** Map and Route Simulation Page        **
+// ******************************************
+//
+// This QML page simulates a map and route functionality using Mapbox and OpenStreetMap. It
+// demonstrates the journey from a current location to a destination by animating a car marker
+// along the calculated route. The animation includes tilting and rotating the map.
+//
+// Key Features:
+// - Visualization of a map with a route line.
+// - Animated car marker to simulate route traversal.
+// - Map tilting and rotating animations.
+// - GeoModel to find destination coordinates.
+// - RouteModel to calculate the route.
+//
+// This page is intended for demonstration purposes and can be customized to fit your
+// application's needs for displaying routes and geolocation data.
+//
+// ******************************************
+
 import QtQuick 2.0
 import QtLocation 5.6
 import QtQml 2.3
@@ -7,33 +27,35 @@ import QtPositioning 5.6
 import QtQuick.Controls.Styles 1.4
 
 Page {
-    width:  adaptive.width(500)
-    height: adaptive.height(300)
-//    color: "transparent"
+    id: pageMap
 
-    property var currentLoc: QtPositioning.coordinate(48.150492, 11.537279)   //QtPositioning.coordinate(-27.573383, 153.091167)
+    property var currentLoc: QtPositioning.coordinate(48.150492, 11.537279)   // current location
     property bool isRoutingStart: false
-
+    property bool runMapAnimation: false
 
     function startAnimation (){
         geoModel.update()
     }
 
+    width:  adaptive.width(500)
+    height: adaptive.height(300)
+
+
+    // Gradient to give fading effect on edges
     RadialGradient {
-        z: 100000000
-          anchors.fill: parent
-          gradient: Gradient {
-              GradientStop {
+        z: 1
+        anchors.fill: parent
+        gradient: Gradient {
+            GradientStop {
                 position: 0.0
                 color: "#00000000"
-              }
-              GradientStop {
+            }
+            GradientStop {
                 position: 0.52
                 color: "black"
-              }
             }
-
-      }
+        }
+    }
 
     // Main map
     Map {
@@ -50,11 +72,10 @@ Page {
 
             PluginParameter { name: "mapboxgl.access_token"; value: "pk.eyJ1IjoiaGFzZWVidGFyaXExOTk4IiwiYSI6ImNsbGw4cXQ3YTFsdXkzanBxaG1rZDZrYTgifQ.8M9sbj-GM8oDrhAfCMUasw"}
             PluginParameter { name: "mapboxgl.mapping.additional_style_urls"; value: "mapbox://styles/haseebtariq1998/clm1o9olf00rf01qxb3nr9n82"}
-
         }
 
 
-        // Route line
+        // Route line, to show route from current location to destination
         MapItemView{
             id: mapRouteLine
 
@@ -63,8 +84,7 @@ Page {
                 MapRoute{
                     route: routeData
                     line.color: "aqua"
-                    line.width: 7
-
+                    line.width: adaptive.width(7)
                 }
             }
         }
@@ -72,14 +92,15 @@ Page {
         // Current location marker
         MapQuickItem{
             id: currentLocationMarker
+
             coordinate: QtPositioning.coordinate(48.150492, 11.537279)
             visible: false
-            z:1000
+            z: 1
 
             onCoordinateChanged:
             {
                 if(isRoutingStart)
-                     map.center = coordinate
+                    map.center = coordinate
             }
 
             sourceItem: Rectangle{
@@ -95,13 +116,11 @@ Page {
                     height: adaptive.height(100) *  (map.zoomLevel / 17)
                     source: "qrc:/Assets/Images/Map/CarMarker.png"
                     anchors.centerIn: parent
-//                    anchors.horizontalCenterOffset: 3
                 }
             }
 
             Behavior on coordinate {
                 PropertyAnimation {
-
                     duration: 5000
                 }
             }
@@ -111,9 +130,9 @@ Page {
         // Destination marker
         MapQuickItem{
             id: destinationMarker
-            visible: false
-            z:1000
 
+            visible: false
+            z: 1
 
             sourceItem: Rectangle{
                 width: adaptive.width(50) * (map.zoomLevel / 17)
@@ -134,10 +153,9 @@ Page {
         // Departure location marker
         MapQuickItem{
             id: startMarker
+
             visible: false
-            z:1000
-
-
+            z: 1
             sourceItem: Rectangle{
                 width: adaptive.width(50) * (map.zoomLevel / 17)
                 height: adaptive.height(50) *  (map.zoomLevel / 17)
@@ -159,16 +177,14 @@ Page {
         // Route model to calculate route
         RouteModel{
             id : routeModel
+
             plugin: geoModel.plugin
             query: RouteQuery{
                 id:  routeQuery
             }
 
-
             onRoutesChanged: {
-
                 map.center = routeModel.get(0).path[ (routeModel.get(0).path.length/2).toFixed(0) ]
-                console.log(map.center)
                 destinationMarker.coordinate = routeModel.get(0).path[ routeModel.get(0).path.length -1 ]
                 startMarker.coordinate = currentLoc
                 destinationMarker.visible = true
@@ -178,6 +194,7 @@ Page {
         }
 
 
+        // Timer to start car driving animation
         Timer{
             id: animationTimer
 
@@ -205,8 +222,8 @@ Page {
             onTriggered: {
                 if(path.length > index)
                 {
-                currentLocationMarker.coordinate = path[index]
-                index++
+                    currentLocationMarker.coordinate = path[index]
+                    index++
                 }
                 else{
                     simulateDrive.stop()
@@ -241,17 +258,18 @@ Page {
     }
 
 
+    // Animation to show at start where map tilts and rotates
     SequentialAnimation{
-      id: routeStartAnimation
+        id: routeStartAnimation
 
-      PropertyAnimation {
-          id: centeranimation
+        PropertyAnimation {
+            id: centeranimation
 
-          duration: 1000
-          target: map
-          property: "center"
-          to: currentLoc
-      }
+            duration: 1000
+            target: map
+            property: "center"
+            to: currentLoc
+        }
         NumberAnimation{
             id: zoomAnimation
 
@@ -281,12 +299,5 @@ Page {
             from: -80
             to: 0
         }
-
-
-    }
-
-    Component.onCompleted: {
-
-
     }
 }

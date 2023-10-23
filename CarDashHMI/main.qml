@@ -4,263 +4,126 @@ import QtQuick.Controls 2.12
 import QtQml 2.3
 
 import "qrc:/CustomComponents"
-
 import "qrc:/JavascriptScripts/AdaptiveLayoutManager.js" as Responsive
 
 ApplicationWindow {
     id: mainWindow
 
+
+    property var adaptive: new Responsive.AdaptiveLayoutManager(1219,487, mainWindow.width,mainWindow.height)
+
+    // Properties to test different UI components
+    property bool runAnimations: true // To assigne value to different UI component , set it false
+    property double speedValue: 150 //  Range [0 ~ 280] ( range can be change in component properties )
+    property double rpmValue: 4 //  Range [0 ~ 8] ( range can be change in component properties )
+    property double fuelBarValue: 50  // Range [0 ~ 100] ( range can be change in component properties )
+    property double temperatureBarValue: 50  // Range [0 ~ 100] ( range can be change in component properties )
+
     width: 1219
     height: 487
     visible: true
     title: qsTr("CarDashHMI")
-    property var adaptive: new Responsive.AdaptiveLayoutManager(1219,487, mainWindow.width,mainWindow.height)
 
     onWidthChanged: {
         if(adaptive)
-        adaptive.updateWindowWidth(mainWindow.width)
+            adaptive.updateWindowWidth(mainWindow.width)
     }
 
     onHeightChanged: {
         if(adaptive)
-        adaptive.updateWindowHeight(mainWindow.height)
+            adaptive.updateWindowHeight(mainWindow.height)
     }
 
     background: Image {
         id: background
+
         width: adaptive.width(1219)
         height: adaptive.height(487)
         source: "qrc:/Assets/Images/Background.png"
     }
 
+    // Font loader contaning the font sources that are used in application
     FontLoader {
-           id: uniTextFont
-           source: "qrc:/Assets/Fonts/Unitext Regular.ttf" // Path to your font file
-       }
+        id: uniTextFont
 
+        source: "qrc:/Assets/Fonts/Unitext Regular.ttf"
+    }
+
+    // Tool bar to display Date , time and  ambient temperature
+    ToolBar{
+        id: toolBar
+    }
+
+    // RPM Gauge for value (set 'value') within a range (0 to max 'maxValue')
     Gauge{
-        id: rpm
+        id: rpmGauge
 
-        value: 0
+        x: adaptive.width(59)
+        y: adaptive.height(50)
         z: 2
-        anchors{
-            verticalCenter: parent.verticalCenter
-            left: parent.left
-            leftMargin: adaptive.width(59)
-        }
+        gaugeValueUnitText.text: "rpm/1000"
+        gaugeValueText: value.toFixed(0)
+        value: mainWindow.rpmValue
+        maxValue: 8
     }
 
-    SequentialAnimation{
-        loops: Animation.Infinite
-                running: true
-
-        NumberAnimation{
-            duration: 17000
-            properties: "value"
-            from: 0
-            to: 7
-            target: rpm
-
-            easing.type:Easing.OutInQuad // Easing.OutInSine // Easing.InOutSine
-
-        }
-
-//                NumberAnimation{
-//                    duration: 3000
-//                    properties: "value"
-//                    to: 3
-//                    target: rpm
-
-
-//                }
-
-//                NumberAnimation{
-//                    duration: 1000
-//                    properties: "value"
-//                    from: 3
-//                    to: 2.8
-//                    target: rpm
-
-
-//                }
-
-//                NumberAnimation{
-//                    duration: 5000
-//                    properties: "value"
-//                    to: 5
-//                    target: rpm
-
-
-//                }
-
-//                NumberAnimation{
-//                    duration: 1000
-//                    properties: "value"
-//                    from: 5
-//                    to: 4.8
-//                    target: rpm
-
-
-//                }
-
-//                NumberAnimation{
-//                    duration: 7000
-//                    properties: "value"
-//                    to: 7
-//                    target: rpm
-
-
-//                }
-
-        NumberAnimation{
-            duration: 10000
-            properties: "value"
-            to: 0
-            target: rpm
-
-
-        }
-
-    }
-
-SequentialAnimation{
-    loops: Animation.Infinite
-            running: true
-
-    NumberAnimation{
-        duration: 17000
-        properties: "value"
-        from: 0
-        to: 210
-        target: speed
-
-        easing.type:Easing.InOutQuad
-
-    }
-
-    NumberAnimation{
-        duration: 10000
-        properties: "value"
-        to: 0
-        target: speed
-
-
-    }
-
-
-//    NumberAnimation{
-//        duration: 10000
-//        properties: "value"
-//        from: 3
-//        to: 6
-//        target: rpm
-
-////        easing.type: Easing.OutQuad
-
-//    }
-
-//    NumberAnimation{
-//        duration: 15000
-//        properties: "value"
-//        from: 6
-//        to: 7
-//        target: rpm
-
-////        easing.type: Easing.OutQuad
-
-//    }
-
-
-}
-
-
-SequentialAnimation{
-
-    running: true
-    loops: Animation.Infinite
-
-    NumberAnimation{
-        duration: 5000
-        properties: "value"
-        from: 0
-        to: 100
-        target: fuelBar
-    }
-    NumberAnimation{
-        duration: 5000
-        properties: "value"
-        from: 100
-        to: 0
-        target: fuelBar
-    }
-}
-
+    // Speed Gauge for value (set 'value') within a range (0 to max 'maxValue')
     Gauge{
-        id: speed
+        id: speedGauge
+
         x: adaptive.width(767)
         y: adaptive.height(50)
         z: 2
         gaugeValueUnitText.text: "km/h"
-        gaugeValueText: value.toFixed(0) % 5 == 0 ? value.toFixed(0) : speed.gaugeValueText
+        gaugeValueText: value.toFixed(0) % 5 == 0 ? value.toFixed(0) : speedGauge.gaugeValueText
         value: 200
         maxValue: 280
         gaugeShadow.horizontalOffset: -3
     }
 
+    // Fuel Bar Indicator (set 'value' within the range [ 0 to 'max'] using 'maxValue').
     BarIndicator{
         id: fuelBar
+
         value: 100
         maxValue: 100
-
         x: adaptive.width(28)
         y: adaptive.height(289)
     }
 
+    // Temperature Bar Indicator (set 'value' within the range [ 0 to 'max'] using 'maxValue').\
     BarIndicator{
         id: temperatureBar
 
-        x: adaptive.width(mainWindow.width - 27)
+        x: adaptive.width(1192)
         y: adaptive.height(289)
         maxValue: 100
-        value: 30
-
-        transform: [
-            Scale{ xScale: -1}
-        ]
+        value: 80
+        leftMirrorInvert: true
     }
 
+    // Menu section that has stack view to show Media player and Maps
+    // runMenuAnimation: argument turn on and off animation of both Media player and maps
     MenuSection{
+        id: menuSection
+
+        runMenuAnimation: runAnimations
     }
 
-    ToolBar{
 
+    // Demo component to animate speed gauge , rpm gauge and fuel bar indicator
+    DemoAnimation{
+        id: demoAnimation
+
+        runAnimation: runAnimations
     }
 
-    Text {
-        id: date
-        font.pointSize: 11
-        text: "156"
-        color: "white"
-        font.family: uniTextFont.name
+    FooterBar{
+        id: footerbar
+
         anchors{
-            horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 39
-            horizontalCenterOffset: 163
+            horizontalCenter: parent.horizontalCenter
         }
     }
-
-    Text {
-        id: range
-        font.pointSize: 11
-        text: "000000"
-        color: "white"
-        font.family: uniTextFont.name
-        anchors{
-            horizontalCenter: parent.horizontalCenter
-            bottom: parent.bottom
-            bottomMargin: 39
-        }
-    }
-
 }

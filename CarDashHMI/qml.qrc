@@ -20,5 +20,7 @@
         <file>Assets/Images/Media/AlbumArt.png</file>
         <file>Assets/Images/Media/MusicIcon.png</file>
         <file>CustomComponents/ToolBar.qml</file>
+        <file>CustomComponents/DemoAnimation.qml</file>
+        <file>CustomComponents/FooterBar.qml</file>
     </qresource>
 </RCC>
