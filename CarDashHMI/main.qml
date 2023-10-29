@@ -15,7 +15,7 @@ ApplicationWindow {
     // Properties to test different UI components
     property bool runAnimations: true // To assigne value to different UI component , set it false
     property double speedValue: 150 //  Range [0 ~ 280] ( range can be change in component properties )
-    property double rpmValue: 4 //  Range [0 ~ 8] ( range can be change in component properties )
+    property double rpmValue: 3 //  Range [0 ~ 8] ( range can be change in component properties )
     property double fuelBarValue: 50  // Range [0 ~ 100] ( range can be change in component properties )
     property double temperatureBarValue: 50  // Range [0 ~ 100] ( range can be change in component properties )
 
@@ -65,6 +65,7 @@ ApplicationWindow {
         gaugeValueText: value.toFixed(0)
         value: mainWindow.rpmValue
         maxValue: 8
+        alertThemeActivate : rpmGauge.value >= 5
     }
 
     // Speed Gauge for value (set 'value') within a range (0 to max 'maxValue')
@@ -79,6 +80,8 @@ ApplicationWindow {
         value: 200
         maxValue: 280
         gaugeShadow.horizontalOffset: -3
+        alertThemeActivate : rpmGauge.value >= 5
+
     }
 
     // Fuel Bar Indicator (set 'value' within the range [ 0 to 'max'] using 'maxValue').
