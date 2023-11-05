@@ -4,7 +4,7 @@
 #include "weather.h"
 #include <QDebug>
 #include <QQmlContext>
-
+#include <QQmlEngine>
 
 int main(int argc, char *argv[])
 {
@@ -15,6 +15,11 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+
+    qmlRegisterType<Weather>("weather.enum", 1, 0, "WEATHER");
+    QScopedPointer<Weather> weather(new Weather);
+    engine.rootContext()->setContextProperty("weather",weather.get());
+
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
@@ -22,14 +27,6 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
-
-    QScopedPointer<Weather> weather(new Weather);
-
-    engine.rootContext()->setContextProperty("weather",weather.get());
-
-
-
-
 
     return app.exec();
 }

@@ -22,5 +22,13 @@
         <file>CustomComponents/ToolBar.qml</file>
         <file>CustomComponents/DemoAnimation.qml</file>
         <file>CustomComponents/FooterBar.qml</file>
+        <file>CustomComponents/WeatherStatusIcon.qml</file>
+        <file>Assets/Images/WeatherStatusIconAssets/Clear.png</file>
+        <file>Assets/Images/WeatherStatusIconAssets/Cloud.png</file>
+        <file>Assets/Images/WeatherStatusIconAssets/Mist.png</file>
+        <file>Assets/Images/WeatherStatusIconAssets/Rain.png</file>
+        <file>Assets/Images/WeatherStatusIconAssets/Snow.png</file>
+        <file>Assets/Images/WeatherStatusIconAssets/Storm.png</file>
+        <file>Assets/Images/WeatherStatusIconAssets/ErrorState.png</file>
     </qresource>
 </RCC>

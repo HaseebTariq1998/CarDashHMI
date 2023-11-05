@@ -2,7 +2,7 @@
 
 Weather::Weather(QObject *parent) : QObject(parent)
 {
-    temperatureInCelsius = 0;
+    m_temperatureInCelsius = 0;
     connect(&networkManager, &QNetworkAccessManager::finished, this, &Weather::onWeatherDataReceived);
     fetchWeatherData();
 
@@ -10,16 +10,79 @@ Weather::Weather(QObject *parent) : QObject(parent)
 
 double Weather::temperatureCelsius() const
 {
-    return temperatureInCelsius;
+    return m_temperatureInCelsius;
+}
+
+void Weather::setTemperatureCelsius(const double &temperatureCelsius)
+{
+    if(m_temperatureInCelsius == temperatureCelsius)
+        return;
+
+    m_temperatureInCelsius = temperatureCelsius;
+    emit temperatureChanged(m_temperatureInCelsius);
+
+
+}
+
+double Weather::extractTemperature(const QJsonObject &jsonObject)
+{
+    if (jsonObject.contains("main"))
+    {
+        QJsonObject mainObject = jsonObject["main"].toObject();
+        if (mainObject.contains("temp"))
+        {
+            double temperatureKelvin = mainObject["temp"].toDouble();
+            return temperatureKelvin - 273.15;  // Convert from Kelvin to Celsius
+        }
+    }
+    return -1;  // Indicate failure
+}
+
+QString Weather::extractMainWeather(const QJsonObject &jsonObject)
+{
+    if (jsonObject.contains("weather"))
+    {
+        QJsonArray weatherArray = jsonObject["weather"].toArray();
+        if (!weatherArray.isEmpty())
+        {
+            return weatherArray[0].toObject()["main"].toString();
+        }
+    }
+    return QString();  // Empty string indicates no weather data
+}
+
+Weather::WeatherState Weather::mainWeatherToEnum(const QString &mainWeather)
+{
+    if (mainWeather == "Clear")
+        return Weather::Clear;
+    else if (mainWeather == "Clouds")
+        return Weather::Clouds;
+    else if (mainWeather == "Rain")
+        return Weather::Rain;
+    else if (mainWeather == "Snow")
+        return Weather::Snow;
+    else if (mainWeather == "Thunderstorm")
+        return Weather::Thunderstorm;
+    else if (mainWeather == "Thunderstorm")
+        return Weather::Thunderstorm;
+    else if (mainWeather == "Drizzle")
+        return Weather::Drizzle;
+    else if (mainWeather == "Drizzle")
+        return Weather::Drizzle;
+    else if (mainWeather == "Mist" || mainWeather == "Fog")
+        return Weather::Mist;
+    else
+        return WeatherState::Unknown;
 }
 
 void Weather::fetchWeatherData()
 {
 
-        QNetworkRequest request(QUrl(this->apiUrl));
-        networkManager.get(request);
+    QNetworkRequest request(QUrl(this->apiUrl));
+    networkManager.get(request);
 
 }
+
 
 void Weather::onWeatherDataReceived(QNetworkReply *reply)
 {
@@ -31,19 +94,33 @@ void Weather::onWeatherDataReceived(QNetworkReply *reply)
         if (!jsonDoc.isNull())
         {
             QJsonObject jsonObject = jsonDoc.object();
-            if (jsonObject.contains("main"))
+
+            double temperatureCelsius = extractTemperature(jsonObject);
+            if (temperatureCelsius != -1)
             {
-                QJsonObject mainObject = jsonObject["main"].toObject();
-                if (mainObject.contains("temp"))
-                {
-                    double temperatureKelvin = mainObject["temp"].toDouble();
-                    double temperatureCelsius = temperatureKelvin - 273.15;  // Convert from Kelvin to Celsius
-                    temperatureInCelsius = temperatureCelsius;
-                    emit temperatureChanged(temperatureCelsius);
-                }
+                setTemperatureCelsius(temperatureCelsius);
+            }
+
+            QString mainWeather = extractMainWeather(jsonObject);
+            if (!mainWeather.isEmpty())
+            {
+                setWeatherState(mainWeatherToEnum(mainWeather));
             }
         }
     }
 
     reply->deleteLater();
+}
+
+Weather::WeatherState Weather::getWeatherState() const
+{
+    return m_weatherState;
+}
+
+void Weather::setWeatherState(WeatherState newWeatherState)
+{
+    if (m_weatherState == newWeatherState)
+        return;
+    m_weatherState = newWeatherState;
+    emit weatherStateChanged();
 }

@@ -2,7 +2,6 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
 import QtQml 2.3
-
 import "qrc:/CustomComponents"
 import "qrc:/JavascriptScripts/AdaptiveLayoutManager.js" as Responsive
 

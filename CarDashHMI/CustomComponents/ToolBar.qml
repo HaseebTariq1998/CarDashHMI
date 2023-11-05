@@ -56,6 +56,15 @@ Item {
         }
     }
 
+    WeatherStatusIcon{
+        id: weatherStatusIcon
+        anchors{
+            right: temperature.left
+            rightMargin: adaptive.width(10)
+            verticalCenter: temperature.verticalCenter
+        }
+    }
+
     Text {
         id: temperature
 
@@ -66,7 +75,7 @@ Item {
         anchors{
             verticalCenter: clock.verticalCenter
             left: clock.left
-            leftMargin: adaptive.width(130)
+            leftMargin: adaptive.width(160)
 
         }
     }
