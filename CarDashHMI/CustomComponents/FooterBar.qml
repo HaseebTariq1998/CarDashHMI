@@ -24,14 +24,15 @@ import QtQuick 2.0
 Item {
     id: mainFooter
 
-    property alias range: range.text
-    property alias odometer: odometer.text
+    property alias range: rangeValue.text
+    property var odometer : 0
 
     height: parent.height * 0.18
     width: parent.width
 
     Text {
-        id: range
+        id: rangeValue
+
         font.pointSize: adaptive.average(11)
         text: "156"
         color: "white"
@@ -45,9 +46,10 @@ Item {
     }
 
     Text {
-        id: odometer
+        id: odometerValue
+
         font.pointSize: adaptive.average(11)
-        text: "000000"
+        text: (odometer).toString().padStart(6, '0');
         color: "white"
         font.family: uniTextFont.name
         anchors{

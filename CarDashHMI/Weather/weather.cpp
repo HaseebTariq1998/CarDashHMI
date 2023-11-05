@@ -2,26 +2,8 @@
 
 Weather::Weather(QObject *parent) : QObject(parent)
 {
-    m_temperatureInCelsius = 0;
-    connect(&networkManager, &QNetworkAccessManager::finished, this, &Weather::onWeatherDataReceived);
+    connect(&m_networkManager, &QNetworkAccessManager::finished, this, &Weather::onWeatherDataReceived);
     fetchWeatherData();
-
-}
-
-double Weather::temperatureCelsius() const
-{
-    return m_temperatureInCelsius;
-}
-
-void Weather::setTemperatureCelsius(const double &temperatureCelsius)
-{
-    if(m_temperatureInCelsius == temperatureCelsius)
-        return;
-
-    m_temperatureInCelsius = temperatureCelsius;
-    emit temperatureChanged(m_temperatureInCelsius);
-
-
 }
 
 double Weather::extractTemperature(const QJsonObject &jsonObject)
@@ -77,16 +59,14 @@ Weather::WeatherState Weather::mainWeatherToEnum(const QString &mainWeather)
 
 void Weather::fetchWeatherData()
 {
-
     QNetworkRequest request(QUrl(this->apiUrl));
-    networkManager.get(request);
-
+    m_networkManager.get(request);
 }
 
 
 void Weather::onWeatherDataReceived(QNetworkReply *reply)
 {
-    if (reply->error() == QNetworkReply::NoError)
+    if (reply->error() != QNetworkReply::NoError)
     {
         QByteArray data = reply->readAll();
         QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
@@ -98,7 +78,7 @@ void Weather::onWeatherDataReceived(QNetworkReply *reply)
             double temperatureCelsius = extractTemperature(jsonObject);
             if (temperatureCelsius != -1)
             {
-                setTemperatureCelsius(temperatureCelsius);
+                setAmbientTemperature(temperatureCelsius);
             }
 
             QString mainWeather = extractMainWeather(jsonObject);
@@ -108,7 +88,6 @@ void Weather::onWeatherDataReceived(QNetworkReply *reply)
             }
         }
     }
-
     reply->deleteLater();
 }
 
@@ -122,5 +101,18 @@ void Weather::setWeatherState(WeatherState newWeatherState)
     if (m_weatherState == newWeatherState)
         return;
     m_weatherState = newWeatherState;
-    emit weatherStateChanged();
+    emit weatherStateChanged(m_weatherState);
+}
+
+double Weather::ambientTemperature() const
+{
+    return m_ambientTemperature;
+}
+
+void Weather::setAmbientTemperature(double newAmbientTemperature)
+{
+    if (qFuzzyCompare(m_ambientTemperature, newAmbientTemperature))
+        return;
+    m_ambientTemperature = newAmbientTemperature;
+    emit ambientTemperatureChanged(m_ambientTemperature);
 }

@@ -69,7 +69,7 @@ Item {
         id: temperature
 
         font.pointSize: adaptive.average(14)
-        text: weather.temperatureCelsius.toFixed(0) == 0 ? "--"+"°C" : weather.temperatureCelsius.toFixed(0) +"°C"
+        text: weather.ambientTemperature.toFixed(0) == 0 ? "--"+"°C" : weather.ambientTemperature.toFixed(0) +"°C"
         color: "white"
         font.family: uniTextFont.name
         anchors{

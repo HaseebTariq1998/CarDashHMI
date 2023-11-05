@@ -55,7 +55,7 @@ Item{
         Image {
             id: gaugeAsset
 
-            source: "qrc:/Assets/Images/Gauge.png"
+            source: "qrc:/Assets/Images/Gauge/Gauge.png"
             height: adaptive.height(391)
             width: adaptive.width(387)
             z: -1
@@ -101,7 +101,7 @@ Item{
             opacity: alertThemeActivate  ? 7.5 : 0.6
             maskSource: Image {
                 id: name
-                source: "qrc:/Assets/Images/Gauge.png"
+                source: "qrc:/Assets/Images/Gauge/Gauge.png"
             }
         }
     }
@@ -247,7 +247,7 @@ Item{
     Rectangle{
         id: needleElement
 
-        property int angle: value/maxValue * 320
+        property int angle : value > maxValue ? 320 : value < 0 ? 0 : value/maxValue * 320
 
         z: 2
         anchors.centerIn: parent
@@ -266,7 +266,7 @@ Item{
             y: adaptive.height(-77)
             width: adaptive.average(86)
             height: adaptive.average(98)
-            source: "qrc:/Assets/Images/needle.png"
+            source: "qrc:/Assets/Images/Gauge/needle.png"
 
             LinearGradient {
                 visible: alertThemeActivate

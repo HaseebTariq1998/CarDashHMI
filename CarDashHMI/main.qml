@@ -8,15 +8,18 @@ import "qrc:/JavascriptScripts/AdaptiveLayoutManager.js" as Responsive
 ApplicationWindow {
     id: mainWindow
 
-
+    // Class to facilitates adaptive layout adjustments by updating and calculating adapted width, height, and averages
+    // based on specified original and new dimensions
     property var adaptive: new Responsive.AdaptiveLayoutManager(1219,487, mainWindow.width,mainWindow.height)
 
     // Properties to test different UI components
     property bool runAnimations: true // To assigne value to different UI component , set it false
-    property double speedValue: 150 //  Range [0 ~ 280] ( range can be change in component properties )
+    property double speedValue: 210 //  Range [0 ~ 280] ( range can be change in component properties )
     property double rpmValue: 3 //  Range [0 ~ 8] ( range can be change in component properties )
     property double fuelBarValue: 50  // Range [0 ~ 100] ( range can be change in component properties )
-    property double temperatureBarValue: 50  // Range [0 ~ 100] ( range can be change in component properties )
+    property double temperatureBarValue: 40  // Range [0 ~ 100] ( range can be change in component properties )
+    property int odometer: 786 // Any whole number
+    property int range: 156 // Any whole number
 
     width: 1219
     height: 487
@@ -38,7 +41,7 @@ ApplicationWindow {
 
         width: adaptive.width(1219)
         height: adaptive.height(487)
-        source: "qrc:/Assets/Images/Background.png"
+        source: "qrc:/Assets/Images/Background/Background.png"
     }
 
     // Font loader contaning the font sources that are used in application
@@ -76,7 +79,7 @@ ApplicationWindow {
         z: 2
         gaugeValueUnitText.text: "km/h"
         gaugeValueText: value.toFixed(0) % 5 == 0 ? value.toFixed(0) : speedGauge.gaugeValueText
-        value: 200
+        value: mainWindow.speedValue
         maxValue: 280
         gaugeShadow.horizontalOffset: -3
         alertThemeActivate : rpmGauge.value >= 5
@@ -85,9 +88,9 @@ ApplicationWindow {
 
     // Fuel Bar Indicator (set 'value' within the range [ 0 to 'max'] using 'maxValue').
     BarIndicator{
-        id: fuelBar
+        id: temperatureBar
 
-        value: 100
+        value: temperatureBarValue
         maxValue: 100
         x: adaptive.width(28)
         y: adaptive.height(289)
@@ -95,12 +98,12 @@ ApplicationWindow {
 
     // Temperature Bar Indicator (set 'value' within the range [ 0 to 'max'] using 'maxValue').\
     BarIndicator{
-        id: temperatureBar
+        id: fuelBar
 
         x: adaptive.width(1192)
         y: adaptive.height(289)
         maxValue: 100
-        value: 80
+        value: fuelBarValue
         leftMirrorInvert: true
     }
 
@@ -120,9 +123,12 @@ ApplicationWindow {
         runAnimation: runAnimations
     }
 
+    // Footer that displays odometer and range fields
     FooterBar{
         id: footerbar
 
+        odometer: mainWindow.odometer
+        range: mainWindow.range
         anchors{
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter

@@ -52,7 +52,7 @@ Item {
         id: barOne
 
         opacity: 0.2
-        source:"qrc:/Assets/Images/BarIndicator/barIndicatorOne.png"
+        source:"qrc:/Assets/Images/BarIndicator/BarIndicatorOne.png"
         height: parent.height
         width: parent.width
         anchors.centerIn: parent
@@ -62,7 +62,7 @@ Item {
         id: barTwo
 
         opacity: 0.2
-        source:"qrc:/Assets/Images/BarIndicator/barIndicatorTwo.png"
+        source:"qrc:/Assets/Images/BarIndicator/BarIndicatorTwo.png"
         height: parent.height
         width: parent.width
         anchors.centerIn: parent
@@ -72,7 +72,7 @@ Item {
         id: barThree
 
         opacity: 0.2
-        source:"qrc:/Assets/Images/BarIndicator/barIndicatorThree.png"
+        source:"qrc:/Assets/Images/BarIndicator/BarIndicatorThree.png"
         height: parent.height
         width: parent.width
         anchors.centerIn: parent
@@ -82,7 +82,7 @@ Item {
         id: barFour
 
         opacity: 0.2
-        source: "qrc:/Assets/Images/BarIndicator/barIndicatorFour.png"
+        source: "qrc:/Assets/Images/BarIndicator/BarIndicatorFour.png"
         height: parent.height
         width: parent.width
         anchors.centerIn: parent
@@ -128,7 +128,6 @@ Item {
             PropertyChanges { target: barTwo; opacity: 1}
             PropertyChanges { target: barThree; opacity: 1}
             PropertyChanges { target: barFour; opacity: 1}
-
         }
     ]
 }

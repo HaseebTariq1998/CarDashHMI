@@ -1,7 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QScopedPointer>
-#include "weather.h"
+#include "Weather/weather.h"
 #include <QDebug>
 #include <QQmlContext>
 #include <QQmlEngine>
@@ -13,12 +13,13 @@ int main(int argc, char *argv[])
 #endif
 
     QGuiApplication app(argc, argv);
-
     QQmlApplicationEngine engine;
 
-    qmlRegisterType<Weather>("weather.enum", 1, 0, "WEATHER");
+    qmlRegisterUncreatableType<Weather>("weather.enum", 1, 0, "WEATHER","Weather class is only exposed to provide enum support on front end");
     QScopedPointer<Weather> weather(new Weather);
-    engine.rootContext()->setContextProperty("weather",weather.get());
+    if(!weather.isNull()){
+        engine.rootContext()->setContextProperty("weather",weather.get());
+    }
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

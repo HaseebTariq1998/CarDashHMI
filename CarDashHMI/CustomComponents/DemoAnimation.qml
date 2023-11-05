@@ -61,14 +61,14 @@ Item {
             properties: "value"
             from: 0
             to: 100
-            target: fuelBar
+            target: temperatureBar
         }
         NumberAnimation{
             duration: 6000
             properties: "value"
             from: 100
             to: 0
-            target: fuelBar
+            target: temperatureBar
         }
     }
 }
