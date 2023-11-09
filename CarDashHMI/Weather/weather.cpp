@@ -66,7 +66,7 @@ void Weather::fetchWeatherData()
 
 void Weather::onWeatherDataReceived(QNetworkReply *reply)
 {
-    if (reply->error() != QNetworkReply::NoError)
+    if (reply->error() == QNetworkReply::NoError)
     {
         QByteArray data = reply->readAll();
         QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
