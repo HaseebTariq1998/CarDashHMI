@@ -33,7 +33,7 @@ Item {
     Text {
         id: rangeValue
 
-        font.pointSize: adaptive.average(11)
+        font.pointSize: adaptive.average(13)
         text: "156"
         color: "white"
         font.family: uniTextFont.name
@@ -48,7 +48,7 @@ Item {
     Text {
         id: odometerValue
 
-        font.pointSize: adaptive.average(11)
+        font.pointSize: adaptive.average(13)
         text: (odometer).toString().padStart(6, '0');
         color: "white"
         font.family: uniTextFont.name
