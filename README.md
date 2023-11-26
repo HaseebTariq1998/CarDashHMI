@@ -20,17 +20,17 @@
 
 <p align="center">
   <img  src="GitAssets/ClusterAquaMode.png">
-   <figcaption style="text-align: center"> Fig.1 - Cluster in red theme.</figcaption>
+   <figcaption style="text-align: center"> Fig.1 - Cluster in aqua theme.</figcaption>
 </p>
 
 <p align="center">
   <img  src="GitAssets/ClusterRedMode.png">
-   <figcaption style="text-align: center"> Fig.1 - Cluster in red theme.</figcaption>
+   <figcaption style="text-align: center"> Fig.2 - Cluster in red theme (At higher RPM).</figcaption>
 </p>
   
 <p align="center">
   <img  src="GitAssets/ClusterDiagram.png">
-   <figcaption style="text-align: center"> Fig.1 - Trulli, Puglia, Italy.</figcaption>
+   <figcaption style="text-align: center"> Fig.3 - Clsuter Diagram </figcaption>
 </p>
 
 
@@ -92,4 +92,4 @@ We welcome contributions to this project. You can contribute by creating pull re
 
 ## License
 
-This project is licensed under [GPL](LICENSE.txt). Please refer to the LICENSE file for specific licensing details.
+This project is licensed under [GPL](LICENSE). Please refer to the LICENSE file for specific licensing details.
