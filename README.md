@@ -5,6 +5,9 @@
  The CarDashHMI project is a sophisticated in-vehicle Human-Machine Interface (HMI) that leverages the power of Qt Quick, offering a rich and stunning user interface. it has been developed with a strong focus on responsiveness, reusability, and customization. It encompasses a variety of components, including speed and RPM gauges, fuel and temperature level indicators, a media player page for simulating track playback, and a map page, all contributing to its comprehensive design.
 
 
+https://github.com/HaseebTariq1998/CarDashHMI/assets/88825966/6332d9e0-c7ca-49da-9261-b1069570a514
+
+Full video available at: (CarDashHMIDemo)[https://www.youtube.com/watch?v=bJzfTh7QC0A]
 
 ## Key Features
 
