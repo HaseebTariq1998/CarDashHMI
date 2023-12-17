@@ -1,0 +1,34 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>CustomComponents/Gauge.qml</file>
+        <file>Assets/Fonts/Unitext Regular.ttf</file>
+        <file>JavascriptScripts/AdaptiveLayoutManager.js</file>
+        <file>CustomComponents/BarIndicator.qml</file>
+        <file>CustomComponents/MenuSection.qml</file>
+        <file>CustomComponents/Pages/PageMap.qml</file>
+        <file>Assets/Images/Map/CarMarker.png</file>
+        <file>Assets/Images/Map/LocationMarker.png</file>
+        <file>CustomComponents/Pages/PageMedia.qml</file>
+        <file>Assets/Images/Media/AlbumArt.png</file>
+        <file>Assets/Images/Media/MusicIcon.png</file>
+        <file>CustomComponents/ToolBar.qml</file>
+        <file>CustomComponents/DemoAnimation.qml</file>
+        <file>CustomComponents/FooterBar.qml</file>
+        <file>CustomComponents/WeatherStatusIcon.qml</file>
+        <file>Assets/Images/WeatherStatusIconAssets/Clear.png</file>
+        <file>Assets/Images/WeatherStatusIconAssets/Cloud.png</file>
+        <file>Assets/Images/WeatherStatusIconAssets/Mist.png</file>
+        <file>Assets/Images/WeatherStatusIconAssets/Rain.png</file>
+        <file>Assets/Images/WeatherStatusIconAssets/Snow.png</file>
+        <file>Assets/Images/WeatherStatusIconAssets/Storm.png</file>
+        <file>Assets/Images/WeatherStatusIconAssets/ErrorState.png</file>
+        <file>Assets/Images/Gauge/Gauge.png</file>
+        <file>Assets/Images/Gauge/needle.png</file>
+        <file>Assets/Images/BarIndicator/BarIndicatorFour.png</file>
+        <file>Assets/Images/BarIndicator/BarIndicatorOne.png</file>
+        <file>Assets/Images/BarIndicator/BarIndicatorThree.png</file>
+        <file>Assets/Images/BarIndicator/BarIndicatorTwo.png</file>
+        <file>Assets/Images/Background/Background.png</file>
+    </qresource>
+</RCC>
